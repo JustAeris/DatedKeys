@@ -10,7 +10,7 @@
         <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
         <PackageVersion>1.0.2</PackageVersion>
         <Copyright>Aeris © 2021</Copyright>
-        <PackageReleaseNotes>Initial release</PackageReleaseNotes>
+        <PackageReleaseNotes>Fixed some bugs and added supported framworks</PackageReleaseNotes>
         <PackageLicenseExpression>AGPL-3.0-or-later</PackageLicenseExpression>
         <PackageProjectUrl>https://github.com/JustAeris/DatedKeys</PackageProjectUrl>
         <RepositoryType>git</RepositoryType>
