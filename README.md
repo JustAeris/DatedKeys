@@ -1,5 +1,5 @@
 # DatedKeys
-Simple library that allows to generate keys holding an expiry date.
+## Simple library that allows to generate keys holding an expiry date.
 
 DateKeys a simple, easy to use library which allows you to generate keys which hold an expiry date in it.
 I made this project for learning and trying to get a working generator.
