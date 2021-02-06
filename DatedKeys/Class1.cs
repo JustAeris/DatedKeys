@@ -2,7 +2,8 @@
 using System.Globalization;
 using System.Text;
 
-namespace DatedKeys
+// ReSharper disable once CheckNamespace
+namespace Aeris
 {
     public static class DatedKeys
     {
@@ -12,6 +13,7 @@ namespace DatedKeys
         /// <param name="key">Key to get the expiry date out.</param>
         /// <param name="expiryDate">Expiry date, will return <code>DateTime.MinValue</code></param>
         /// <returns></returns>
+        // ReSharper disable once MemberCanBePrivate.Global
         public static bool TryParseExpiryDate(string key, out DateTime expiryDate)
         {
             try
@@ -46,19 +48,22 @@ namespace DatedKeys
         /// Precision up to the day.
         /// </summary>
         /// <param name="expiryDate">Expiry date of the key.</param>
+        /// <param name="seed">Seed for the Random object. Leaving empty will use a random number</param>
         /// <returns></returns>
-        public static string GenerateKey(DateTime expiryDate)
+        public static string GenerateKey(DateTime expiryDate, int seed = 0)
         {
+            var random = new Random(seed == 0 ? DateTime.UtcNow.Millisecond : seed);
+            
             var key = "";
-            key += new Random().Next(1, 5);
-            key += new Random().Next(1, 5);
-            key += new Random().Next(1, 5);
-            key += new Random().Next(1, 6);
-            key += new Random().Next(1, 6);
-            key += new Random().Next(1, 3);
+            key += random.Next(1, 5);
+            key += random.Next(1, 5);
+            key += random.Next(1, 5);
+            key += random.Next(1, 6);
+            key += random.Next(1, 6);
+            key += random.Next(1, 3);
 
             var ts = new TimeSpan(expiryDate.Ticks);
-            var totalDaysToString = ts.TotalDays.ToString(CultureInfo.InvariantCulture);
+            var totalDaysToString = ((int)ts.TotalDays).ToString(CultureInfo.InvariantCulture);
 
             totalDaysToString = totalDaysToString.PadLeft(7, '0');
 
