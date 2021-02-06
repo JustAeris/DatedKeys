@@ -1,0 +1,11 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net5.0</TargetFramework>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+        <Title>DatedKeys</Title>
+        <Authors>Aeris</Authors>
+        <Description>Simple NuGet package that allows you to generate keys that can store an expiry date in it. Please note that this is not much secure.</Description>
+    </PropertyGroup>
+
+</Project>
