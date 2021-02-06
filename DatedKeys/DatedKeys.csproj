@@ -1,7 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>net5.0</TargetFramework>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <Title>Dated Keys</Title>
         <Authors>Aeris</Authors>
@@ -9,13 +8,14 @@
         <RepositoryUrl>https://github.com/JustAeris/DatedKeys</RepositoryUrl>
         <PackageTags>key serial expiry date license</PackageTags>
         <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
-        <PackageVersion>1.0.0</PackageVersion>
+        <PackageVersion>1.0.2</PackageVersion>
         <Copyright>Aeris © 2021</Copyright>
         <PackageReleaseNotes>Initial release</PackageReleaseNotes>
         <PackageLicenseExpression>AGPL-3.0-or-later</PackageLicenseExpression>
         <PackageProjectUrl>https://github.com/JustAeris/DatedKeys</PackageProjectUrl>
         <RepositoryType>git</RepositoryType>
         <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+        <TargetFrameworks>net5.0;netcoreapp3.1;netstandard2.1</TargetFrameworks>
     </PropertyGroup>
 
     <ItemGroup>
