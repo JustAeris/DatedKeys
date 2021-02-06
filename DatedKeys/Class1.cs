@@ -6,6 +6,12 @@ namespace DatedKeys
 {
     public static class DatedKeys
     {
+        /// <summary>
+        /// Gets the expiry date of a key if possible.
+        /// </summary>
+        /// <param name="key">Key to get the expiry date out.</param>
+        /// <param name="expiryDate">Expiry date, will return <code>DateTime.MinValue</code></param>
+        /// <returns></returns>
         public static bool TryParseExpiryDate(string key, out DateTime expiryDate)
         {
             try
@@ -21,6 +27,11 @@ namespace DatedKeys
             }
         }
 
+        /// <summary>
+        /// Check whether a ket is expired or not.
+        /// </summary>
+        /// <param name="key">Key to verify</param>
+        /// <returns></returns>
         public static bool IsActiveKey(string key)
         {
             if (TryParseExpiryDate(key, out var expiryDate))
@@ -30,6 +41,12 @@ namespace DatedKeys
             return false;
         }
 
+        /// <summary>
+        /// Generates a key with a expiry date.
+        /// Precision up to the day.
+        /// </summary>
+        /// <param name="expiryDate">Expiry date of the key.</param>
+        /// <returns></returns>
         public static string GenerateKey(DateTime expiryDate)
         {
             var key = "";
@@ -68,6 +85,11 @@ namespace DatedKeys
             return key;
         }
 
+        /// <summary>
+        /// Gets the total amount of days that the key contains.
+        /// </summary>
+        /// <param name="key">Key to process</param>
+        /// <returns></returns>
         private static int GetTotalDays(string key)
         {
             var numbers = $"{key[6]}" +
@@ -81,6 +103,13 @@ namespace DatedKeys
             return int.TryParse(s, out var value) ? value : 0;
         }
 
+        /// <summary>
+        /// Generates a segment of a given length and which contains a give number at a given index.
+        /// </summary>
+        /// <param name="length">Length of the segment</param>
+        /// <param name="numberToStore">Number to store</param>
+        /// <param name="index">Index of the number to store</param>
+        /// <returns></returns>
         private static string GenerateSegment(int length, int numberToStore, int index)
         {
             var segment = new StringBuilder();
