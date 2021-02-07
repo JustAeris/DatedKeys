@@ -16,6 +16,7 @@
         <RepositoryType>git</RepositoryType>
         <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
         <TargetFrameworks>net5.0;netcoreapp3.1;netstandard2.1</TargetFrameworks>
+        <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     </PropertyGroup>
 
     <ItemGroup>
