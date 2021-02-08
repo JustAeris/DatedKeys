@@ -1,9 +1,0 @@
-C:\Users\Administrator\Desktop\DatedKeys\DatedKeys\bin\Release\netcoreapp3.1\DatedKeys.deps.json
-C:\Users\Administrator\Desktop\DatedKeys\DatedKeys\bin\Release\netcoreapp3.1\DatedKeys.dll
-C:\Users\Administrator\Desktop\DatedKeys\DatedKeys\bin\Release\netcoreapp3.1\DatedKeys.pdb
-C:\Users\Administrator\Desktop\DatedKeys\DatedKeys\obj\Release\netcoreapp3.1\DatedKeys.csprojAssemblyReference.cache
-C:\Users\Administrator\Desktop\DatedKeys\DatedKeys\obj\Release\netcoreapp3.1\DatedKeys.AssemblyInfoInputs.cache
-C:\Users\Administrator\Desktop\DatedKeys\DatedKeys\obj\Release\netcoreapp3.1\DatedKeys.AssemblyInfo.cs
-C:\Users\Administrator\Desktop\DatedKeys\DatedKeys\obj\Release\netcoreapp3.1\DatedKeys.csproj.CoreCompileInputs.cache
-C:\Users\Administrator\Desktop\DatedKeys\DatedKeys\obj\Release\netcoreapp3.1\DatedKeys.dll
-C:\Users\Administrator\Desktop\DatedKeys\DatedKeys\obj\Release\netcoreapp3.1\DatedKeys.pdb
