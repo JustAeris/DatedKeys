@@ -50,6 +50,7 @@ namespace Aeris
             {
                 return expiryDate > DateTime.Now;
             }
+            
             return false;
         }
 
@@ -62,22 +63,14 @@ namespace Aeris
         /// <returns></returns>
         public static string GenerateKey(DateTime expiryDate, int seed = 0)
         {
-            //Since you want to allow specification of custom seeds...we can't really reuse instance of Random
+            // Since you want to allow specification of custom seeds...we can't really reuse instance of Random
             
             Rand = new Random(seed == 0 ? DateTime.UtcNow.Millisecond : seed);
             
-            //We don't have to clear the string-builder...since we are pretty much guaranteed
-            //to replace all chars in it!
-
-            // key += Rand.Next(1, 5);
-            // key += Rand.Next(1, 5);
-            // key += Rand.Next(1, 5);
-            // key += Rand.Next(1, 6);
-            // key += Rand.Next(1, 6);
-            // key += Rand.Next(1, 3);
-            
-            //Since I'm too dumb to figure out the impl of this KeyGen...I've decided to just
-            //clear and append, ignoring my statement above
+            // We don't have to clear the string-builder...since we are pretty much guaranteed
+            // to replace all chars in it!
+            // Since I'm too dumb to figure out the impl of this KeyGen...I've decided to just
+            // clear and append, ignoring my statement above
 
             SB.Append(Rand.Next(1, 5));
             
@@ -143,14 +136,6 @@ namespace Aeris
         /// <returns></returns>
         private static int GetTotalDays(string key)
         {
-            // var numbers = $"{key[6]}" +
-            //               $"{key[8 + (int) char.GetNumericValue(key[0])]}" +
-            //               $"{key[14 + (int) char.GetNumericValue(key[1])]}" +
-            //               $"{key[20 + (int) char.GetNumericValue(key[2])]}" +
-            //               $"{key[26 + (int) char.GetNumericValue(key[3])]}" +
-            //               $"{key[33 + (int) char.GetNumericValue(key[4])]}" +
-            //               $"{key[40 + (int) char.GetNumericValue(key[5])]}";
-
             SB.Clear();
 
             SB.Append(key[6]);
@@ -167,11 +152,7 @@ namespace Aeris
             
             SB.Append(key[40 + CharToInt(key[5])]);
             
-            var Numbers = SB.ToString();
-            
-            var s = Numbers.Replace(",", "");
-            
-            return int.TryParse(s, out var value) ? value : 0;
+            return int.TryParse(SB.ToString().Replace(",", ""), out var value) ? value : 0;
         }
 
         /// <summary>
@@ -186,8 +167,6 @@ namespace Aeris
             var Segment = stackalloc char[Length];
             
             Segment[Index] = IntToChar(NumberToStore);
-            
-            //while (Segment.Length < Length) Segment.Append(Rand.Next(0, 9));
 
             for (int I = 0; I < Index; I++)
             {
