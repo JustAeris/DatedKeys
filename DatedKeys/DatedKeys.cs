@@ -8,15 +8,15 @@ namespace Aeris
 {
     public static class DatedKeys
     {
-        private static Random Rand;
+        private static Random _rand;
 
-        private static readonly StringBuilder SB;
+        private static readonly StringBuilder Sb;
 
         static DatedKeys()
         {
-            SB = new StringBuilder(30);
+            Sb = new StringBuilder(30);
         }
-        
+
         /// <summary>
         /// Gets the expiry date of a key if possible.
         /// </summary>
@@ -40,23 +40,20 @@ namespace Aeris
         }
 
         /// <summary>
-        /// Check whether a ket is expired or not.
+        ///     Check whether a ket is expired or not.
         /// </summary>
         /// <param name="key">Key to verify</param>
         /// <returns></returns>
         public static bool IsActiveKey(string key)
         {
-            if (TryParseExpiryDate(key, out var expiryDate))
-            {
-                return expiryDate > DateTime.Now;
-            }
-            
+            if (TryParseExpiryDate(key, out var expiryDate)) return expiryDate > DateTime.Now;
+
             return false;
         }
 
         /// <summary>
-        /// Generates a key with a expiry date.
-        /// Precision up to the day.
+        ///     Generates a key with a expiry date.
+        ///     Precision up to the day.
         /// </summary>
         /// <param name="expiryDate">Expiry date of the key.</param>
         /// <param name="seed">Seed for the Random object. Leaving empty will use a random number</param>
@@ -64,138 +61,132 @@ namespace Aeris
         public static string GenerateKey(DateTime expiryDate, int seed = 0)
         {
             // Since you want to allow specification of custom seeds...we can't really reuse instance of Random
-            
-            Rand = new Random(seed == 0 ? DateTime.UtcNow.Millisecond : seed);
-            
+
+            _rand = new Random(seed == 0 ? DateTime.UtcNow.Millisecond : seed);
+
             // We don't have to clear the string-builder...since we are pretty much guaranteed
             // to replace all chars in it!
             // Since I'm too dumb to figure out the impl of this KeyGen...I've decided to just
             // clear and append, ignoring my statement above
 
-            SB.Append(Rand.Next(1, 5));
-            
-            SB.Append(Rand.Next(1, 5));
-            
-            SB.Append(Rand.Next(1, 5));
-            
-            SB.Append(Rand.Next(1, 6));
-            
-            SB.Append(Rand.Next(1, 6));
-            
-            SB.Append(Rand.Next(1, 3));
-            
+            Sb.Append(_rand.Next(1, 5));
+
+            Sb.Append(_rand.Next(1, 5));
+
+            Sb.Append(_rand.Next(1, 5));
+
+            Sb.Append(_rand.Next(1, 6));
+
+            Sb.Append(_rand.Next(1, 6));
+
+            Sb.Append(_rand.Next(1, 3));
+
             var ts = new TimeSpan(expiryDate.Ticks);
-            
-            var totalDaysToString = ((int)ts.TotalDays).ToString(CultureInfo.InvariantCulture);
+
+            var totalDaysToString = ((int) ts.TotalDays).ToString(CultureInfo.InvariantCulture);
 
             totalDaysToString = totalDaysToString.PadLeft(7, '0');
 
-            const char Dash = '-';
-            
-            SB.Append(totalDaysToString[0]);
+            const char dash = '-';
 
-            SB.Append(Dash);
+            Sb.Append(totalDaysToString[0]);
 
-            SB.Append(GenerateSegment(5, CharToInt(totalDaysToString[1]),
-                CharToInt(SB[0])));
-            
-            SB.Append(Dash);
-            
-            SB.Append(GenerateSegment(5, CharToInt(totalDaysToString[2]),
-                CharToInt(SB[1])));
-            
-            SB.Append(Dash);
+            Sb.Append(dash);
 
-            SB.Append(GenerateSegment(5, CharToInt(totalDaysToString[2]),
-                CharToInt(SB[2])));
-            
-            SB.Append(Dash);
+            Sb.Append(GenerateSegment(5, CharToInt(totalDaysToString[1]),
+                CharToInt(Sb[0])));
 
-            SB.Append(GenerateSegment(5, CharToInt(totalDaysToString[4]),
-                CharToInt(SB[3])));
-            
-            SB.Append(Dash);
-            
-            SB.Append(GenerateSegment(5, CharToInt(totalDaysToString[5]),
-                CharToInt(SB[4])));
-            
-            SB.Append(Dash);
+            Sb.Append(dash);
 
-            SB.Append(GenerateSegment(5, CharToInt(totalDaysToString[6]),
-                CharToInt(SB[5])));
-            
-            SB.Append(Dash);
+            Sb.Append(GenerateSegment(5, CharToInt(totalDaysToString[2]),
+                CharToInt(Sb[1])));
 
-            return SB.ToString();
+            Sb.Append(dash);
+
+            Sb.Append(GenerateSegment(5, CharToInt(totalDaysToString[2]),
+                CharToInt(Sb[2])));
+
+            Sb.Append(dash);
+
+            Sb.Append(GenerateSegment(5, CharToInt(totalDaysToString[4]),
+                CharToInt(Sb[3])));
+
+            Sb.Append(dash);
+
+            Sb.Append(GenerateSegment(5, CharToInt(totalDaysToString[5]),
+                CharToInt(Sb[4])));
+
+            Sb.Append(dash);
+
+            Sb.Append(GenerateSegment(5, CharToInt(totalDaysToString[6]),
+                CharToInt(Sb[5])));
+
+            Sb.Append(dash);
+
+            return Sb.ToString();
         }
 
         /// <summary>
-        /// Gets the total amount of days that the key contains.
+        ///     Gets the total amount of days that the key contains.
         /// </summary>
         /// <param name="key">Key to process</param>
         /// <returns></returns>
         private static int GetTotalDays(string key)
         {
-            SB.Clear();
+            Sb.Clear();
 
-            SB.Append(key[6]);
+            Sb.Append(key[6]);
 
-            SB.Append(key[8 + CharToInt(key[0])]);
-            
-            SB.Append(key[14 + CharToInt(key[1])]);
-            
-            SB.Append(key[20 + CharToInt(key[2])]);
+            Sb.Append(key[8 + CharToInt(key[0])]);
 
-            SB.Append(key[26 + CharToInt(key[3])]);
-            
-            SB.Append(key[33 + CharToInt(key[4])]);
-            
-            SB.Append(key[40 + CharToInt(key[5])]);
-            
-            return int.TryParse(SB.ToString().Replace(",", ""), out var value) ? value : 0;
+            Sb.Append(key[14 + CharToInt(key[1])]);
+
+            Sb.Append(key[20 + CharToInt(key[2])]);
+
+            Sb.Append(key[26 + CharToInt(key[3])]);
+
+            Sb.Append(key[33 + CharToInt(key[4])]);
+
+            Sb.Append(key[40 + CharToInt(key[5])]);
+
+            return int.TryParse(Sb.ToString().Replace(",", ""), out var value) ? value : 0;
         }
 
         /// <summary>
-        /// Generates a segment of a given length and which contains a give number at a given index.
+        ///     Generates a segment of a given length and which contains a give number at a given index.
         /// </summary>
-        /// <param name="Length">Length of the segment</param>
-        /// <param name="NumberToStore">Number to store</param>
-        /// <param name="Index">Index of the number to store</param>
+        /// <param name="length">Length of the segment</param>
+        /// <param name="numberToStore">Number to store</param>
+        /// <param name="index">Index of the number to store</param>
         /// <returns></returns>
-        private static unsafe string GenerateSegment(int Length, int NumberToStore, int Index)
+        private static unsafe string GenerateSegment(int length, int numberToStore, int index)
         {
-            var Segment = stackalloc char[Length];
-            
-            Segment[Index] = IntToChar(NumberToStore);
+            var segment = stackalloc char[length];
 
-            for (int I = 0; I < Index; I++)
-            {
-                Segment[I] = IntToChar(Rand.Next(0, 9));
-            }
-            
-            for (int I = Index + 1; I < Length; I++)
-            {
-                Segment[I] = IntToChar(Rand.Next(0, 9));
-            }
+            segment[index] = IntToChar(numberToStore);
 
-            return new string(Segment, 0, Length);
+            for (var I = 0; I < index; I++) segment[I] = IntToChar(_rand.Next(0, 9));
+
+            for (var I = index + 1; I < length; I++) segment[I] = IntToChar(_rand.Next(0, 9));
+
+            return new string(segment, 0, length);
         }
-        
+
         [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
-        public static int CharToInt(char Char)
+        private static int CharToInt(char @char)
         {
-            return unchecked(Unsafe.As<char, int>(ref Char) - 48);
+            return unchecked(Unsafe.As<char, int>(ref @char) - 48);
         }
-        
+
         [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.AggressiveOptimization)]
-        public static char IntToChar(int Int)
+        private static char IntToChar(int @int)
         {
             unchecked
             {
-                Int += 48;
+                @int += 48;
             }
-            
-            return Unsafe.As<int, char>(ref Int);
+
+            return Unsafe.As<int, char>(ref @int);
         }
     }
 }
