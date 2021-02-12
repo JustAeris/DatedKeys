@@ -18,7 +18,7 @@ namespace Aeris
         }
 
         /// <summary>
-        /// Gets the expiry date of a key if possible.
+        ///     Gets the expiry date of a key if possible.
         /// </summary>
         /// <param name="key">Key to get the expiry date out.</param>
         /// <param name="expiryDate">Expiry date, will return <code>DateTime.MinValue</code></param>
@@ -56,10 +56,12 @@ namespace Aeris
         ///     Precision up to the day.
         /// </summary>
         /// <param name="expiryDate">Expiry date of the key.</param>
-        /// <param name="seed">Seed for the Random object. Leaving empty will use a random number</param>
+        /// <param name="seed">Seed for the Random object. Leaving empty will use a random number.</param>
         /// <returns></returns>
         public static string GenerateKey(DateTime expiryDate, int seed = 0)
         {
+            Sb.Clear();
+
             // Since you want to allow specification of custom seeds...we can't really reuse instance of Random
 
             _rand = new Random(seed == 0 ? DateTime.UtcNow.Millisecond : seed);
@@ -93,35 +95,27 @@ namespace Aeris
 
             Sb.Append(dash);
 
-            Sb.Append(GenerateSegment(5, CharToInt(totalDaysToString[1]),
-                CharToInt(Sb[0])));
+            Sb.Append(GenerateSegment(5, CharToInt(totalDaysToString[1]), CharToInt(Sb[0])));
 
             Sb.Append(dash);
 
-            Sb.Append(GenerateSegment(5, CharToInt(totalDaysToString[2]),
-                CharToInt(Sb[1])));
+            Sb.Append(GenerateSegment(5, CharToInt(totalDaysToString[2]), CharToInt(Sb[1])));
 
             Sb.Append(dash);
 
-            Sb.Append(GenerateSegment(5, CharToInt(totalDaysToString[2]),
-                CharToInt(Sb[2])));
+            Sb.Append(GenerateSegment(5, CharToInt(totalDaysToString[3]), CharToInt(Sb[2])));
 
             Sb.Append(dash);
 
-            Sb.Append(GenerateSegment(5, CharToInt(totalDaysToString[4]),
-                CharToInt(Sb[3])));
+            Sb.Append(GenerateSegment(6, CharToInt(totalDaysToString[4]), CharToInt(Sb[3])));
 
             Sb.Append(dash);
 
-            Sb.Append(GenerateSegment(5, CharToInt(totalDaysToString[5]),
-                CharToInt(Sb[4])));
+            Sb.Append(GenerateSegment(6, CharToInt(totalDaysToString[5]), CharToInt(Sb[4])));
 
             Sb.Append(dash);
 
-            Sb.Append(GenerateSegment(5, CharToInt(totalDaysToString[6]),
-                CharToInt(Sb[5])));
-
-            Sb.Append(dash);
+            Sb.Append(GenerateSegment(3, CharToInt(totalDaysToString[6]), CharToInt(Sb[5])));
 
             return Sb.ToString();
         }
@@ -163,11 +157,11 @@ namespace Aeris
         {
             var segment = stackalloc char[length];
 
-            segment[index] = IntToChar(numberToStore);
-
             for (var I = 0; I < index; I++) segment[I] = IntToChar(_rand.Next(0, 9));
 
             for (var I = index + 1; I < length; I++) segment[I] = IntToChar(_rand.Next(0, 9));
+
+            segment[index] = IntToChar(numberToStore);
 
             return new string(segment, 0, length);
         }
